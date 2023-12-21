@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-# Parse log file and print stats
+"""Parse log file and print stats"""
 import re
 
 pattern = r'(\d+\.\d+\.\d+\.\d+) - \[([\d\- :.]+)\] "(GET [^"]+ HTTP/1\.1)"'\
