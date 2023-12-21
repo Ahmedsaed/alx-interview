@@ -10,6 +10,7 @@ def print_stats(total_size, status_counts):
         if status_counts[code] > 0:
             print("{}: {}".format(code, status_counts[code]))
 
+
 def main():
     """Parse log file and print stats"""
     pattern = r'(\d+\.\d+\.\d+\.\d+) - \[([\d\- :.]+)\] "'\
