@@ -2,11 +2,13 @@
 # Parse log file and print stats
 import re
 
-pattern = r'(\d+\.\d+\.\d+\.\d+) - \[([\d\- :.]+)\] "(GET [^"]+ HTTP/1\.1)" (\d+) (\d+)'
+pattern = r'(\d+\.\d+\.\d+\.\d+) - \[([\d\- :.]+)\] "(GET [^"]+ HTTP/1\.1)"'\
+          r' (\d+) (\d+)'
 
 total_size = 0
 total_lines = 0
-status_counts = {200: 0, 301: 0, 400: 0, 401: 0, 403: 0, 404: 0, 405: 0, 500: 0}
+status_counts = {200: 0, 301: 0, 400: 0, 401: 0,
+                 403: 0, 404: 0, 405: 0, 500: 0}
 
 try:
     while True:
