@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """Parse log file and print stats"""
 import re
+import sys
 
 
 def print_stats(total_size, status_counts):
@@ -22,9 +23,7 @@ def main():
                      403: 0, 404: 0, 405: 0, 500: 0}
 
     try:
-        while True:
-            log_line = input()
-
+        for log_line in sys.stdin:
             match = re.match(pattern, log_line)
 
             if match:
