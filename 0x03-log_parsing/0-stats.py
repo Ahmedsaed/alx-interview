@@ -14,23 +14,21 @@ def print_stats(total_size, status_counts):
 
 def main():
     """Parse log file and print stats"""
-    pattern = r'(\d+\.\d+\.\d+\.\d+) - \[([\d\- :.]+)\] "'\
-              r'(GET [^"]+ HTTP/1\.1)" (\d+) (\d+)'
-
     total_size = 0
     total_lines = 0
     status_counts = {200: 0, 301: 0, 400: 0, 401: 0,
                      403: 0, 404: 0, 405: 0, 500: 0}
 
     try:
-        for log_line in sys.stdin:
-            match = re.match(pattern, log_line)
+        for line in sys.stdin:
+            line = line.split()
+            line = line[::-1]
 
-            if match:
-                file_size = int(match.group(5))
+            if len(line) > 2:
+                file_size = int(line[0])
                 total_size += file_size
 
-                status_code = int(match.group(4))
+                status_code = int(line[1])
                 if status_code in status_counts:
                     status_counts[status_code] += 1
 
