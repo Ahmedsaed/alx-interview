@@ -3,6 +3,13 @@
 import re
 
 
+def print_stats(total_size, status_counts):
+    """Print stats"""
+    print("File size: {}".format(total_size))
+    for code in sorted(status_counts.keys()):
+        if status_counts[code] > 0:
+            print("{}: {}".format(code, status_counts[code]))
+
 def main():
     """Parse log file and print stats"""
     pattern = r'(\d+\.\d+\.\d+\.\d+) - \[([\d\- :.]+)\] "'\
@@ -30,15 +37,9 @@ def main():
                 total_lines += 1
 
                 if total_lines % 10 == 0:
-                    print("File size:", total_size)
-                    for code in sorted(status_counts.keys()):
-                        if status_counts[code] > 0:
-                            print(f"{code}: {status_counts[code]}")
-    except KeyboardInterrupt:
-        print("File size:", total_size)
-        for code in sorted(status_counts.keys()):
-            if status_counts[code] > 0:
-                print(f"{code}: {status_counts[code]}")
+                    print_stats(total_size, status_counts)
+    finally:
+        print_stats(total_size, status_counts)
 
 
 if __name__ == "__main__":
