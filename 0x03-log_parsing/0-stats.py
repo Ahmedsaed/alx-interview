@@ -2,37 +2,44 @@
 """Parse log file and print stats"""
 import re
 
-pattern = r'(\d+\.\d+\.\d+\.\d+) - \[([\d\- :.]+)\] "(GET [^"]+ HTTP/1\.1)"'\
-          r' (\d+) (\d+)'
 
-total_size = 0
-total_lines = 0
-status_counts = {200: 0, 301: 0, 400: 0, 401: 0,
-                 403: 0, 404: 0, 405: 0, 500: 0}
+def main():
+    """Parse log file and print stats"""
+    pattern = r'(\d+\.\d+\.\d+\.\d+) - \[([\d\- :.]+)\] "'\
+              r'(GET [^"]+ HTTP/1\.1)" (\d+) (\d+)'
 
-try:
-    while True:
-        log_line = input()
+    total_size = 0
+    total_lines = 0
+    status_counts = {200: 0, 301: 0, 400: 0, 401: 0,
+                     403: 0, 404: 0, 405: 0, 500: 0}
 
-        match = re.match(pattern, log_line)
+    try:
+        while True:
+            log_line = input()
 
-        if match:
-            file_size = int(match.group(5))
-            total_size += file_size
+            match = re.match(pattern, log_line)
 
-            status_code = int(match.group(4))
-            if status_code in status_counts:
-                status_counts[status_code] += 1
+            if match:
+                file_size = int(match.group(5))
+                total_size += file_size
 
-            total_lines += 1
+                status_code = int(match.group(4))
+                if status_code in status_counts:
+                    status_counts[status_code] += 1
 
-            if total_lines % 10 == 0:
-                print("File size:", total_size)
-                for code in sorted(status_counts.keys()):
-                    if status_counts[code] > 0:
-                        print(f"{code}: {status_counts[code]}")
-except KeyboardInterrupt:
-    print("File size:", total_size)
-    for code in sorted(status_counts.keys()):
-        if status_counts[code] > 0:
-            print(f"{code}: {status_counts[code]}")
+                total_lines += 1
+
+                if total_lines % 10 == 0:
+                    print("File size:", total_size)
+                    for code in sorted(status_counts.keys()):
+                        if status_counts[code] > 0:
+                            print(f"{code}: {status_counts[code]}")
+    except KeyboardInterrupt:
+        print("File size:", total_size)
+        for code in sorted(status_counts.keys()):
+            if status_counts[code] > 0:
+                print(f"{code}: {status_counts[code]}")
+
+
+if __name__ == "__main__":
+    main()
